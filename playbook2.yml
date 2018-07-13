@@ -1,0 +1,20 @@
+---
+- name: creating users and capturing their info in to userinfo file and fetch file from managed hosts to controller
+  hosts: all
+  tasks:
+   - name: creating users
+     user:
+      name: intelliq
+      password: intelliq
+      home: /home/vagrant/intelliq
+ 
+   - name: capturing user name, home directory info in to userinfo file
+     shell: cut -d ":" -f 1,6 /etc/passwd>userinfo
+
+   - name: fetch userinfo file from managed host to controller
+     fetch:
+      src: userinfo
+      dest: /home/vagrant
+
+
+...
